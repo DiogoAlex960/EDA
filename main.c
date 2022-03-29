@@ -51,7 +51,7 @@ typedef struct ListadeOperacoes{
 //------------------------------------------------------------
 
 
-//
+
 //Estrutura para definir um job
 typedef struct Job{
 	string jobid;
