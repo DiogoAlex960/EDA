@@ -37,7 +37,7 @@ typedef struct Operacao{
 //Lista de n operações
 typedef struct ListadeOperacoes{
 	Operacao operation;
-	struct ListadeOperacoes* proximooperacao;
+	struct ListadeOperacoes* proximaoperacao;
 }ListadeOperacoes;
 
 
@@ -60,8 +60,8 @@ typedef struct Job{
 
 // Adicionar toda duração do job (DuracaoJob)
 typedef struct DuracaoJob{
-	int job;
-	int duracao;
+	float job;
+	float duracao;
 }ListadeOperacoes;
 
 
