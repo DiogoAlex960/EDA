@@ -41,7 +41,8 @@ typedef struct ListadeOperacoes{
 }ListadeOperacoes;
 
 
-
+ListadeOperacoes* InserirOperacao(ListadeOperacoes* listadeoperacoes, Operacao newOperacao)
+ListadeOperacoes* RemoverOperacao(ListadeOperacoes* listadeoperacoes)
 
 
 
