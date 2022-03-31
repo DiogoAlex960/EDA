@@ -29,12 +29,12 @@ typedef struct ListadeProcessos{
 
 
 
-//Estrutura para definir uma Operação
+//Estrutura para definir uma OperaÃ§Ã£o
 typedef struct Operacao{
 	int idOperacao;
 }Operacao;
 
-//Lista de n operações
+//Lista de n operaÃ§Ãµes
 typedef struct ListadeOperacoes{
 	Operacao operacao;
 	struct ListadeOperacoes* proximaoperacao;
@@ -87,6 +87,22 @@ int AlterarOperacao(ListadeOperacoes* listadeoperacoes, int id_operacao, int nov
 int CalcularTempoOperacao(ListadeOperacoes* listadeoperacoes);
 
 
+	float a = 0, tempooperacao, tempoprocesso;
+	int soma = 0;
+	while (listadeoperacoes) {
+
+		tempoprocesso = calcular_tempo_processo(operationList->operation.alternProcesses);
+		
+		if (tempoprocesso != -1) sum += tempoprocesso;
+		count++;
+
+		listadeoperacoes = listadeoperacoes->next;
+	}
+	
+	tempooperacao = (float)a / count;
+
+	return tempooperacao;
+}
 
 
 
@@ -101,7 +117,7 @@ typedef struct Job{
 	ListadeOperacoes* operacoes
 }Job;
 
-// Adicionar toda duração do job (DuracaoJob)
+// Adicionar toda duraÃ§Ã£o do job (DuracaoJob)
 typedef struct DuracaoJob{
 	float job;
 	float duracao;
@@ -118,11 +134,10 @@ typedef struct DuracaoJob{
 int main() {
 	
 	
-	
+	Ficheiro Job = ImportJob("../EDA.txt");
 	
 	
 	
 }
-
 
 
