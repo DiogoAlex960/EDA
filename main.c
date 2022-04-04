@@ -58,7 +58,7 @@ if (ListadeOperacoes && (ListadeOperacoes->operacao.idOperacao == idOperacao)) {
 
 	ListadeOperacoes* aux = ListadeOperacoes->nextOperation;
 
-	(ListadeOperacoes->operacao);
+	(ListadeOperacoes->operacao.);
 
 	free(ListadeOperacoes);
 
