@@ -54,7 +54,16 @@ Operacao InserirOperacao(int idOperacao) {
 
 
 ListadeOperacoes* RemoverOperacao(ListadeOperacoes* listadeoperacoes)
+if (ListadeOperacoes && (ListadeOperacoes->operacao.idOperacao == idOperacao)) {
 
+	ListadeOperacoes* aux = ListadeOperacoes->nextOperation;
+
+	(ListadeOperacoes->operacao);
+
+	free(ListadeOperacoes);
+
+	return aux;
+}
 
 
 int AlterarOperacao(ListadeOperacoes* listadeoperacoes, int id_operacao, int novo_id_operacao);
@@ -135,8 +144,54 @@ int main() {
 	
 	
 	Ficheiro Job = ImportJob("../EDA.txt");
-	
-	
+
+	system("cls");
+	int ChoiceInt;
+	job* jobHead = read_job(ImportJob);
+
+	do
+	{
+	do
+	{
+		printf("\t--- MAIN MENU ---\n"
+			"\t  1 - Listar Job\n"
+			"\t  2 - Adicionar Operação\n"
+			"\t  3 - Remover Operação\n"
+			"\t  4 - Alterar Operação\n"
+			"\n\t  0 - Sair\n");
+
+		ChoiceInt = GetInt(0, 6);
+		switch (ChoiceInt)
+		{
+		case 1:
+			(jobHead);
+			break;
+		case 2:
+			jobHead = InserirOperacao(jobHead);
+			break;
+		case 3:
+			jobHead = RemoverOperacao(jobHead);
+			break;
+		case 4:
+			jobHead = AlterarOperacao(jobHead);
+			break;
+		case 5:
+			
+			break;
+		case 6:
+			
+			break;
+		case 0:
+			break;
+		default:
+			printf("\n\t//Opção Invalida//\n\n");
+			MainMenu();
+			break;
+		}
+
+	} while (ChoiceInt != 0);
+}
+
 	
 }
 
