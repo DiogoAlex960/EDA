@@ -37,4 +37,3 @@ typedef struct Job
     struct Operacao* Operacoes;//Contem Nº uma Operação
     struct Job* Next;////Proximo Job
 } Job;
-
