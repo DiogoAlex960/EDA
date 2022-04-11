@@ -58,3 +58,66 @@ int TempoMaximoJob(Job* ListaDeJobs, int Id);
 
 #pragma endregion
 
+
+#pragma region Operações
+
+//Cria uma Operação
+Operacao* CriaOperacao(int Id);
+
+//Insere uma Operação
+Operacao* InsereOperacao(Operacao** ListaDeOperacoes, Operacao* NovaOperacao);
+
+//Remove uma Operação
+Operacao* RemoveOperacao(Operacao* ListaDeOperacoes, int Id);
+
+//Procura uma Operação
+Operacao* ProcuraOperacao(Operacao* ListaDeOperacoes, int Id);
+
+//Troca uma Operação por outra Operação
+Operacao* TrocaOperacao(Operacao* ListaDeOperacoes, int IdOperacao, int IdOperacaoTroca);
+
+//Visualisar o tempo minimo da Operação
+int TempoMinimoOperacao(Operacao* ListaDeOperacoes, int Id);
+
+//Visualizar o tempo máximo da Operação
+int TempoMaximoOperacao(Operacao* ListaDeOperacoes, int Id);
+
+//Visualizar o tempo médio da Operação
+float TempoMedioOperacao(Operacao* ListaDeOperacoes, int Id);
+
+//Verificar se existe operação
+bool ExisteOperacao(Operacao* ListaDeOperacoes, int Id);
+
+//Mostrar Lista de Operações
+void MostraListaOperacoes(Operacao* ListaDeOperacoes);
+
+//Mostrar a operação
+void MostraOperacoes(Operacao* ListaDeOperacoes);
+
+
+#pragma endregion
+
+#pragma region Máquinas
+//Cria uma máquina
+Maquina* CriaMaquina(int Id, int Tempo);
+
+//Insere a máquina
+Maquina* InsereMaquinaLista(Maquina** ListaDeMaquinas, Maquina* NovaMaquina);
+
+//Remove a máquina
+Maquina* RemoveMaquina(Maquina* ListaDeMaquinas, int Id);
+
+//Procura a máquina
+Maquina* ProcuraMaquina(Maquina* ListaDeMaquinas, int Id);
+
+//Se existe a máquina
+bool ExisteMaquina(Maquina* ListaDeMaquinas, int Id);
+
+//Mostra a lista de máquina
+void MostraListaDeMaquinas(Maquina* ListaDeMaquinas);
+
+#pragma endregion
+
+
+
+#endif
