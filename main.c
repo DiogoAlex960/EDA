@@ -39,6 +39,14 @@ void MenuPrincipal()
 
         case 5:
             break;
+			
+        case 6:
+            break;
+
+
+        case 7:
+            break;
+
 
         case 0:
             break;
