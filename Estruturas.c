@@ -8,9 +8,6 @@
 #include <stdbool.h>
 
 #pragma region GravarFicheiros
-
-
-
 void GravarFicheiro(Operacao* ListaDeOperacoes);
 Job* LerFicheiro();
 
@@ -37,3 +34,27 @@ typedef struct Job
     struct Operacao* Operacoes;//Contem Nº uma Operação
     struct Job* Next;////Proximo Job
 } Job;
+
+
+#pragma endregion
+
+#pragma region Externas
+extern Operacao* ListaDeOperacoes;
+extern Maquina* ListaDeMaquinas; //Declaração fora Função
+extern Job* ListaDeJobs;
+#pragma endregion
+
+
+#pragma region Jobs
+
+Job* CriaJob(int Id);
+Job* InsereJob(Job** ListaDeJobs, Job* NovoJob);
+Job* ProcuraJob(Job* ListaDeJobs, int Id);
+void MostraListaJob(Job* ListaDeJobs);
+bool ExisteJob(Job* ListaDeJobs, int Id);
+int TempoMinimoJob(Job* ListaDeJobs, int Id);
+int TempoMaximoJob(Job* ListaDeJobs, int Id);
+
+
+#pragma endregion
+
