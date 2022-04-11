@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <stdbool.h>
+#include "Estruturas.h"
 void MenuPrincipal()
 {
     system("cls");
@@ -62,16 +63,4 @@ void MenuPrincipal()
 }
 
 
-Job* AdicionarOperacao(Job* ListaDeJobs);
 
-Maquina* AdicionarMaquina(Maquina* ListaDeMaquinas);
-
-Job* RemoverOperacao(Job* ListaDeJobs);
-
-Job* AlterarOperacao(Job* ListaDeJobs);
-
-Operacao* AlterarOperacaoAEscolha(Operacao* OperacaoEscolhida, Operacao* ListaDeOperacoes);
-
-void MenuInformacoes(Job* ListaDeJobs);
-
-void MostraJob(Job* ListaDeJobs);
