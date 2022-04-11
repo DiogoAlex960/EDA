@@ -47,12 +47,19 @@ extern Job* ListaDeJobs;
 
 #pragma region Jobs
 
+//Cria um Job
 Job* CriaJob(int Id);
+//Inserir um Job
 Job* InsereJob(Job** ListaDeJobs, Job* NovoJob);
+//Procurar um Job
 Job* ProcuraJob(Job* ListaDeJobs, int Id);
+//Mostrar a lista de Jobs
 void MostraListaJob(Job* ListaDeJobs);
+//Verificar se existe Job
 bool ExisteJob(Job* ListaDeJobs, int Id);
+//Visualizar o tempo minimo dos Jobs
 int TempoMinimoJob(Job* ListaDeJobs, int Id);
+//Visualizar o tempo máximo dos Jobs
 int TempoMaximoJob(Job* ListaDeJobs, int Id);
 
 
