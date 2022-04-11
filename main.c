@@ -60,3 +60,18 @@ void MenuPrincipal()
 
     GravarFicheiro(ListaDeJobs->Operacoes);
 }
+
+
+Job* AdicionarOperacao(Job* ListaDeJobs);
+
+Maquina* AdicionarMaquina(Maquina* ListaDeMaquinas);
+
+Job* RemoverOperacao(Job* ListaDeJobs);
+
+Job* AlterarOperacao(Job* ListaDeJobs);
+
+Operacao* AlterarOperacaoAEscolha(Operacao* OperacaoEscolhida, Operacao* ListaDeOperacoes);
+
+void MenuInformacoes(Job* ListaDeJobs);
+
+void MostraJob(Job* ListaDeJobs);
