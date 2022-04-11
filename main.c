@@ -26,23 +26,18 @@ void MenuPrincipal()
         switch (num)
         {
         case 1:
-            MenuMostraJob(ListaDeJobs);
             break;
 
         case 2:
-            ListaDeJobs = MenuAdicionaOperacao(ListaDeJobs);
             break;
 
         case 3:
-            ListaDeJobs = MenuRemoveOperacao(ListaDeJobs);
             break;
 
         case 4:
-            ListaDeJobs = MenuAlteraOperacao(ListaDeJobs);
             break;
 
         case 5:
-            MenuInformacoes(ListaDeJobs);
             break;
 
         case 0:
