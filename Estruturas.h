@@ -109,7 +109,7 @@ void MostraOperacoes(Operacao* ListaDeOperacoes);
 Maquina* CriaMaquina(int Id, int Tempo);
 
 //Insere a máquina
-Maquina* InsereMaquinaLista(Maquina** ListaDeMaquinas, Maquina* NovaMaquina);
+Maquina* InsereMaquina(Maquina** ListaDeMaquinas, Maquina* NovaMaquina);
 
 //Remove a máquina
 Maquina* RemoveMaquina(Maquina* ListaDeMaquinas, int Id);
