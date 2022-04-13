@@ -1,4 +1,6 @@
-
+//Licenciatura Engenharia Informática Médica
+//Diogo Alexandre Mendes Simões Nº15328
+//Estrutura Dados Avançadas
 #include <stdio.h>
 #include <stdlib.h>
 #include<conio.h>
@@ -170,9 +172,7 @@ Maquina* AdicionaMaquina(Maquina* ListaDeMaquinas)
     do
     {
         system("cls");
-
-        printf("--- UpMachine ---\n"
-               "1 - Adicionar uma Maquina \n"
+        printf("1 - Adicionar uma Maquina \n"
                "0 - Sair\n");
 
         Escolha = Valor(1, 0);

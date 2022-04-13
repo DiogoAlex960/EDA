@@ -1,3 +1,6 @@
+//Licenciatura Engenharia Informática Médica
+//Diogo Alexandre Mendes Simões Nº15328
+//Estrutura Dados Avançadas
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
