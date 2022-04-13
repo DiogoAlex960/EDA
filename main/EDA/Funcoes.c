@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "Estrutura.h"
 
-#pragma region FuncoesAuxiliares
 
 //Função Escolha Main
 int Valor(int Maximo, int Minimo)
@@ -23,7 +22,6 @@ int Valor(int Maximo, int Minimo)
     return num;
 }
 
-#pragma endregion
 
 #pragma region Jobss
 
