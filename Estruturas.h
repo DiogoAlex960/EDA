@@ -7,9 +7,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#pragma region GravarFicheiros
-void GravarFicheiro(Operacao* ListaDeOperacoes);
-Job* LerFicheiro();
 
 #pragma endregion
 #pragma region Estruturas
@@ -44,6 +41,9 @@ extern Maquina* ListaDeMaquinas; //Declaração fora Função
 extern Job* ListaDeJobs;
 #pragma endregion
 
+#pragma region GravarFicheiros
+void GravarFicheiro(Operacao* ListaDeOperacoes);
+Job* LerFicheiro();
 
 #pragma region Jobs
 
