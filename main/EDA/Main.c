@@ -54,7 +54,6 @@ void MainMenu()
 
                 MostraListaJobs(ListaDeJobs);
 
-                printf("Enter to Continue!");
                 getche();
                 system("cls");
             break;
@@ -67,7 +66,6 @@ void MainMenu()
             TempoMinimo = TempoMinimoDeJob(ListaDeJobs, ListaDeJobs->Id);
 
             printf("Menor Tempo do Job: %d\n\n", TempoMinimo);
-            printf("Enter to Continue!");
             getche();
             system("cls");
             break;
@@ -79,7 +77,6 @@ void MainMenu()
             TempoMaximo = TempoMaximoDeJob(ListaDeJobs, ListaDeJobs->Id);
 
             printf("Maior Tempo do Job: %d\n\n", TempoMaximo);
-             printf("Enter to Continue!");
             getche();
             system("cls");
             break;
@@ -99,8 +96,7 @@ void MainMenu()
             if (auxOperacao == NULL)
             {
 
-                printf("\nOperacao nao Existe\n");
-                printf("Enter to Continue!");
+                printf("Erro");
                 getche();
                 system("cls");
                 break;
@@ -109,7 +105,6 @@ void MainMenu()
             TempoMedio = TempoMedioDaOperacao(ListaDeJobs->Operacoes, auxOperacao->Id);
 
             printf("Tempo Medio da Operacao: %d\n\n", TempoMedio);
-            printf("Enter to Continue!");
             getche();
             system("cls");
             break;
@@ -143,7 +138,6 @@ Job* AdicionaOperacao(Job* ListaDeJobs)
     if (ExisteOperacao(ListaDeJobs->Operacoes, IdOperacao) == true)
     {
         printf("\nOperacao ja Existe\n");
-        printf("Enter to Continue!");
         getche();
         system("cls");
         return ListaDeJobs;

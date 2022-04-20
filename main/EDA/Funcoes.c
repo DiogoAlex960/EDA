@@ -12,13 +12,13 @@ int Valor(int Maximo, int Minimo)
 {
     int num = -1;
 
-    printf("\nApontador - ");
+    printf("\nVoce esta aqui - ");
     scanf(" %d", &num);
 
     while (num > Maximo || num < Minimo)
     {
         printf("\nFail\n");
-        printf("\nApontador - ");
+        printf("\nVoce esta aqui - ");
         scanf(" %d", &num);
     }
     system("cls");
