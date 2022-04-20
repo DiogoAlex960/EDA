@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1649813427 source:c:\users\diogo\onedrive\documents\github\eda\main\eda\funcoes.c
+	<stdbool.h>
+	<stdio.h>
+	<stdlib.h>
+	"Estrutura.h"
+
+1649813432 c:\users\diogo\onedrive\documents\github\eda\main\eda\estrutura.h
+	<stdlib.h>
+	<stdio.h>
+	<stdbool.h>
+	<locale.h>
+	<ctype.h>
+
+1649813424 source:c:\users\diogo\onedrive\documents\github\eda\main\eda\main.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"Estrutura.h"
+	<string.h>
+
