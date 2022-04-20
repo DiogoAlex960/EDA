@@ -227,8 +227,7 @@ Job* RemoveOperacao(Job* ListaDeJobs)
 	{
     if (ExisteOperacao(ListaDeJobs->Operacoes, IdOperacao) == false)
     {
-        printf("\nnao Existe!\n\n");
-        printf("Enter to Continue!");
+        printf("Erro");
         getche();
         system("cls");
         return ListaDeJobs;
@@ -260,8 +259,7 @@ Job* RemoveOperacao(Job* ListaDeJobs)
     }
 
     system("cls");
-    printf("Removida!\n\n");
-    printf("Enter to Continue!");
+    printf("Erro");
     getche();
     system("cls");
     return ListaDeJobs;
@@ -286,8 +284,7 @@ Job* AlteraOperacao(Job* ListaDeJobs)
 
     if (ExisteOperacao(ListaDeJobs->Operacoes, IdOperacao) == false)
     {
-        printf("\nnao Existe\n\n");
-        printf("Enter to Continue!");
+        printf("Erro");
         getche();
         system("cls");
         return ListaDeJobs;
@@ -298,8 +295,7 @@ Job* AlteraOperacao(Job* ListaDeJobs)
     auxOperacao = AlteraOperacaoEscolhida(auxOperacao, ListaDeJobs->Operacoes);
 
     system("cls");
-    printf("\nAlterada!\n\n");
-    printf("Enter to Continue!");
+    printf("Erro");
     getche();
     system("cls");
     return ListaDeJobs;
@@ -328,9 +324,9 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
 
             int Id, Tempo;
 
-            printf("Introduza o Id da Maquina:\n\t> ");
+            printf("Introduza o Id da Maquina:");
             scanf(" %d", &Id);
-            printf("Introduza o Tempo da Maquina:\n\t> ");
+            printf("Introduza o Tempo da Maquina:");
             scanf(" %d", &Tempo);
 
             Maquina* NovaMaquina = CriaMaquina(Id, Tempo);
@@ -342,15 +338,14 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
 
             int Id2;
 
-            printf("Introduza o Id da Maquina:\n\t> ");
+            printf("Introduza o Id da Maquina:> ");
             scanf(" %d", &Id2);
 
             Maquina* auxMaquina = ProcuraMaquina(OperacaoEscolhida->Maquinas, Id2);
 
             if (auxMaquina == NULL)
             {
-                printf("\nnao Existe\n");
-                printf("Enter to Continue!");
+                printf("Erro");
                 getche();
                 system("cls");
                 break;
@@ -364,7 +359,7 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
 
             int Id3, NovoTempo;
 
-            printf("Introduza o Id da Maquina:\n\t> ");
+            printf("Introduza o Id da Maquina:> ");
             scanf(" %d", &Id3);
 
             Maquina* auxMaquina2 = ProcuraMaquina(OperacaoEscolhida->Maquinas, Id3);
@@ -372,20 +367,18 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
             if (auxMaquina2 == NULL)
             {
 
-                printf("\nnao Existe\n");
-                printf("Enter to Continue!");
+                printf("Erro");
                 getche();
                 system("cls");
                 break;
             }
 
-            printf("Insira o novo Tempo da Maquina Escolhida:\n\t> ");
+            printf("Insira o novo Tempo da Maquina Escolhida:> ");
             scanf(" %d", &NovoTempo);
 
             auxMaquina2->Tempo = NovoTempo;
 
             printf("Tempo Mudado");
-            printf("Enter to Continue!");
             getche();
             system("cls");
             break;
@@ -395,14 +388,13 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
 
             int IdOperacao;
 
-            printf("Introduza o Id da Operacao para que deseja trocar:\n\t> ");
+            printf("Introduza o Id da Operacao para que deseja trocar:> ");
             scanf(" %d", &IdOperacao);
 
             if (IdOperacao == OperacaoEscolhida->Id)
             {
 
-                printf("\n\tNao se pode trocar uma Operacao com a mesma Operacao\n\n");
-                printf("Enter to Continue!");
+                printf("Erro, a mesma operação não funciona");
                 getche();
                 system("cls");
                 break;
@@ -413,8 +405,7 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
             if (auxOperacao == NULL)
             {
 
-                printf("\nnao Existe\n");
-                printf("Enter to Continue!");
+                printf("Erro");
                 getche();
                 system("cls");
                 break;
@@ -426,8 +417,7 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
             OperacaoEscolhida->Maquinas = auxOperacao->Maquinas;
             auxOperacao->Maquinas = auxMaquina3;
 
-            printf("\n Trocado!\n");
-            printf("Enter to Continue!");
+            printf("Troca Realizada");
             getche();
             system("cls");
             break;
