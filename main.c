@@ -23,7 +23,6 @@ void MenuPrincipal()
                "\n 0 - Sair\n");
 
         num = GetInt(7, 0);
-
         switch (num)
         {
         case 1:
@@ -61,6 +60,7 @@ void MenuPrincipal()
 
     GravarFicheiro(ListaDeJobs->Operacoes);
 }
-
+//Adicionar menu //Adicionar Maquinas
+//Adicionar menu alterar opção do utilizador
 
 

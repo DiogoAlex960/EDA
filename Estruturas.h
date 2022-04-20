@@ -1,5 +1,4 @@
 
-
 #ifndef Structs
 #define Structs
 
@@ -7,31 +6,27 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
-#pragma endregion
-#pragma region Estruturas
-typedef struct Operacao
-{
-    int Id;//Contem um ID
-    struct Maquina* Maquinas;//Contem Nº Maquinas
-    struct Operacao* Next; // Proxima Operação
-} Operacao;
-
-typedef struct Maquina
-{
-    int Id;//Contem ID
-    int Tempo;//Contem Tempo
-    struct Maquina* Next;//Proxima Máquina
-} Maquina;
-
-
+//Jobs
 typedef struct Job
 {
-    int Id;//Contem um ID
-    struct Operacao* Operacoes;//Contem Nº uma Operação
-    struct Job* Next;////Proximo Job
+    int Id;//Cont�m um ID
+    struct Operacao* Operacoes;//Cont�m N�Opera��es
+    struct Job* Seguinte;////Pr�ximo Job
 } Job;
-
+//Maquina
+typedef struct Maquina
+{
+    int Id;//Cont�m ID
+    int Tempo;//Cont�m Tempo
+    struct Maquina* Seguinte;//Pr�xima M�quina
+} Maquina;
+//Opera��o
+typedef struct Operacao
+{
+    int Id;//Cont�m um ID
+    struct Maquina* Maquinas;//Cont�m N�Maquinas
+    struct Operacao* Seguinte; // Pr�xima Opera��o
+} Operacao;
 
 #pragma endregion
 
