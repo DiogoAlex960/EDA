@@ -65,9 +65,9 @@ Job* LerFicheiro()
         return false;
     }
 
-    while (!feof(Ficheiro))
+    while (!feof(Ficheiro)) //Esta função retorna um valor diferente de zero quando o indicador End-of-File associado ao fluxo é definido, caso contrário, zero é retornado.
     {
-        while (fscanf(Ficheiro, "%d", &IdMaquinas) == 1)
+        while (fscanf(Ficheiro, "%d", &IdMaquinas) == 1) //A função fscanf() é usada para ler a entrada formatada do fluxo fornecido na linguagem C. Retorna zero, se não for bem-sucedido. Caso contrário, ele retornará A string de entrada, se for bem-sucedida.
         {
             fscanf(Ficheiro, " %d", &TempoMaquinas);
             auxMaquina = CriaMaquina(IdMaquinas, TempoMaquinas);
@@ -217,7 +217,7 @@ int TempoMinimoDaOperacao(Operacao* ListaDeOperacoes, int Id)
         return 0;
     }
 
-    int TempoMinimoDaOperacao = 100, IdMaquina;
+    int TempoMinimoDaOperacao = 5, IdMaquina;
     Operacao* aux = ProcuraOperacao(ListaDeOperacoes, Id);
     Maquina* auxMaquina = aux->Maquinas;
 

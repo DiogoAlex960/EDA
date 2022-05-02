@@ -241,7 +241,7 @@ Job* RemoveOperacao(Job* ListaDeJobs)
         {
             auxJob->Operacoes = auxOperacao->Seguinte;
         }
-        free(auxOperacao);
+        free(auxOperacao);//desalocar dinamicamente a memória.
         auxOperacao = auxJob->Operacoes;
         IdOperacao = 1;
         while (auxOperacao != NULL)
@@ -259,6 +259,9 @@ Job* RemoveOperacao(Job* ListaDeJobs)
     return ListaDeJobs;
 	}
 	else{
+	     system("cls");
+    printf("Erro");
+    getche();
         system("cls");
         return ListaDeJobs;
 	}
