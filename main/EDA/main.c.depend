@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1651450132 source:c:\users\diogo\onedrive\documents\github\eda\main\eda\funcoes.c
+1651450197 source:c:\users\diogo\onedrive\documents\github\eda\main\eda\funcoes.c
 	<stdbool.h>
 	<stdio.h>
 	<stdlib.h>
