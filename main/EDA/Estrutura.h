@@ -111,6 +111,7 @@ Maquina* ProcuraMaquina(Maquina* ListaDeMaquinas, int Id);
 //Jobs
 //Cria um Job
 Job* CriaJob(int Id);
+//**Lista Ligada de uma lista ligada, Um apontador que irá ter outro apontador. Apontadore de Apontadores
 
 //Insere um determinado Job
 Job* InsereJob(Job** ListaDeJobs, Job* NovoJob);
