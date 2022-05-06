@@ -271,8 +271,8 @@ float TempoMedioDaOperacao(Operacao* ListaDeOperacoes, int Id)
         scanf("Lista Vazia");
     }
 
-    int Soma; // Será somado todas operaçôpes
-    int Total ; //Armazenado todas as operações
+    int Soma = 0; // Será somado todas operaçôpes
+    int Total = 0; //Armazenado todas as operações
     Operacao* aux = ProcuraOperacao(ListaDeOperacoes, Id);
     Maquina* auxMaquina = aux->Maquinas;
 
@@ -284,7 +284,7 @@ float TempoMedioDaOperacao(Operacao* ListaDeOperacoes, int Id)
         auxMaquina = auxMaquina->Seguinte;
     }
 
-    return Soma / Total; //Resultado Final
+    return (Soma / Total); //Resultado Final
 }
 
 //Verificar se a operação existe

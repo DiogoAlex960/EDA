@@ -104,7 +104,7 @@ void MainMenu()
 
             TempoMedio = TempoMedioDaOperacao(ListaDeJobs->Operacoes, auxOperacao->Id);
 
-            printf("Tempo Medio da Operacao: %d\n\n", TempoMedio);
+            printf("Tempo Medio da Operacao: %d\n", TempoMedio);
             getche();
             system("cls");
             break;
