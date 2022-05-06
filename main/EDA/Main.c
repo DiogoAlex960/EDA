@@ -191,6 +191,8 @@ Maquina* AdicionaMaquina(Maquina* ListaDeMaquinas)
             return ListaDeMaquinas;
 
         default:
+
+
             printf("\nErro\n\n");
             return ListaDeMaquinas;
         }
@@ -253,14 +255,14 @@ Job* RemoveOperacao(Job* ListaDeJobs)
     }
 
     system("cls");
-    printf("Erro");
+    printf("Efetuado");
     getche();
     system("cls");
     return ListaDeJobs;
 	}
 	else{
 	     system("cls");
-    printf("Erro");
+    printf("Carregue Enter para continuar");
     getche();
         system("cls");
         return ListaDeJobs;

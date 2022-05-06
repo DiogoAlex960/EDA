@@ -355,7 +355,7 @@ Maquina* CriaMaquina(int Id, int Tempo)
 
     return NovaMaquina;
 }
-
+//**Lista Ligada de uma lista ligada, Um apontador que irá ter outro apontador. Apontadore de Apontadores
 //Inserir uma maquina
 Maquina* InsereMaquina(Maquina** ListaDeMaquinas, Maquina* NovaMaquina)
 {
