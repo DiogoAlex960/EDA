@@ -24,11 +24,13 @@ void MainMenu()
                "5 - Minimo\n"
                "6 - Maximo\n"
                "7 - Media\n"
+               "8- AddJob"
+               "9- Remover Job"
                "\n"
                "0 - Quit\n"
                "------------------------------ <-> ------------------------------");
 
-        Escolha = Valor(7, 0);
+        Escolha = Valor(8, 0);
 
         switch (Escolha)
         {
@@ -109,7 +111,14 @@ void MainMenu()
             system("cls");
             break;
 
+    case 8:
+                ListaDeJobs = AdicionarJob(ListaDeJobs);
 
+    break;
+    case 9:
+                ListaDeJobs = AdicionarJob(ListaDeJobs);
+
+    break;
         case 0:
             break;
 
@@ -123,8 +132,109 @@ void MainMenu()
     GravarJobs(ListaDeJobs->Operacoes);
 }
 
+//---------------------------------------------------------------------------------------------
 
 
+Job* AdicionarJob(Job* ListaDeJobs)
+{
+    int IdJob;
+
+    system("cls");
+
+    printf("Id do Job que deseja Adicionar\n");
+    scanf(" %d", &IdJob);
+
+    if (ExisteJob(ListaDeJobs, IdJob) == true)
+    {
+        printf("\nJob ja Existe\n");
+        getche();
+        system("cls");
+        return ListaDeJobs;
+    }
+
+    Job* auxjob = CriaJob(IdJob);
+    ListaDeJobs =  InsereJob(&ListaDeJobs, auxjob);
+
+
+
+    system("cls");
+    return ListaDeJobs;
+}
+
+Job* RemoveJob(Job* ListaDeJobs)
+{
+    system("cls");
+
+    int IdJob;
+
+    MostraJobs(ListaDeJobs);
+
+    printf("Introduza o Id do Job que quer Remover\n");
+    scanf(" %d", &IdJob);
+
+    int a;
+	 printf("Deseja realizar mesmo esta operacao?: \n\t"
+	 "Se sim, carregue 1.\n\t"
+	 "Se nao, carregue 0.\n\t");
+     printf("->");
+	scanf ("%d",&a);
+
+
+	if (a==1)
+	{
+    if (ExisteJob(ListaDeJobs, IdJob) == false)
+    {
+        printf("Erro");
+        getche();
+        system("cls");
+        return ListaDeJobs;
+    }
+
+    Job* auxJob = ProcuraJob(ListaDeJobs, ListaDeJobs->Id);
+    Job* auxJob = ProcuraJob(ListaDeJobs, IdJob);
+
+    if (auxJob != NULL)
+    {
+        Job* auxJob2 = ProcuraJob(ListaDeJobs, IdJob - 1);
+        if (auxJob2 != NULL)
+        {
+            auxJob2->Seguinte = auxJob->Seguinte;
+        }
+        else
+        {
+            auxJob->Operacoes = auxOperacao->Seguinte;
+        }
+        free(aux);//desalocar dinamicamente a memória.
+        auxOperacao = auxJob->Operacoes;
+        IdOperacao = 1;
+        while (auxOperacao != NULL)
+        {
+            auxOperacao->Id = IdOperacao;
+            IdOperacao++;
+            auxOperacao = auxOperacao->Seguinte;
+        }
+    }
+
+    system("cls");
+    printf("Efetuado");
+    getche();
+    system("cls");
+    return ListaDeJobs;
+	}
+	else{
+	     system("cls");
+    printf("Carregue Enter para continuar");
+    getche();
+        system("cls");
+        return ListaDeJobs;
+	}
+}
+
+
+
+
+
+//---------------------------------------------------------------------------------------------
 //Adicionar Operações
 Job* AdicionaOperacao(Job* ListaDeJobs)
 {

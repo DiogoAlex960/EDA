@@ -156,7 +156,8 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
 //Adicionar uma determinada maquina
 Maquina* AdicionaMaquina(Maquina* ListaDeMaquinas);
 
-
+Job* AdicionarJob(Job* ListaDeJobs);
+Job* RemoveJob(Job* ListaDeJobs);
 #pragma endregion
 
 #endif
