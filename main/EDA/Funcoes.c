@@ -8,6 +8,7 @@
 
 
 //Função Escolha Main
+
 int Valor(int Maximo, int Minimo)
 {
     int num = -1;
@@ -26,75 +27,93 @@ int Valor(int Maximo, int Minimo)
 }
 
 
-#pragma region Jobss
-
 //Gravar informação no Jobs
 void GravarJobs(Operacao* ListaDeOperacoes)
 {
     FILE* Jobs;
     Jobs = fopen("Jobs.txt", "w");
-    while (ListaDeOperacoes != NULL)
-    {
-        while (ListaDeOperacoes->Maquinas != NULL)
-        {
-            printf(Jobs, "\n %d \n %d\n", ListaDeOperacoes->Maquinas->Id, ListaDeOperacoes->Maquinas->Tempo);
-            ListaDeOperacoes->Maquinas = ListaDeOperacoes->Maquinas->Seguinte;
-        }
 
-        printf(Jobs, "- %d", ListaDeOperacoes->Id);
-        if (ListaDeOperacoes->Seguinte != NULL)
+    while (ListaDeJobs != NULL)
+    {
+        while (ListaDeJobs->Operacoes != NULL)
         {
-            printf(Jobs, "\n");
+            while (ListaDeJobs->Operacoes->Maquinas != NULL)
+            {
+                fprintf(Ficheiro, "- %d %d\n", ListaDeJobs->Operacoes->Maquinas->Id, ListaDeJobs->Operacoes->Maquinas->Tempo);
+                ListaDeJobs->Operacoes->Maquinas = ListaDeJobs->Operacoes->Maquinas->Next;
+            }
+
+            fprintf(Ficheiro, "- - %d\n", ListaDeJobs->Operacoes->Id);
+            ListaDeJobs->Operacoes = ListaDeJobs->Operacoes->Next;
         }
-        ListaDeOperacoes = ListaDeOperacoes->Seguinte;
+        fprintf(Ficheiro, "%d", ListaDeJobs->Id);
+        if (ListaDeJobs->Next != NULL)
+        {
+            fprintf(Ficheiro, "\n");
+        }
+        ListaDeJobs = ListaDeJobs->Next;
     }
 }
 
 Job* LerFicheiro()
 {
     FILE* Ficheiro;
-    int Temp, IdOperacoes, IdMaquinas, TempoMaquinas;
+    int Temp, IdJobs,IdOperacoes, IdMaquinas, TempoMaquinas;
+    char Buffer = '-';
     Operacao* auxOperacao,* ListaDeOperacoes = NULL;
     Maquina* auxMaquina,* ListaDeMaquinas = NULL;
-    Job* ListaDeJobs = NULL;
+    Job* auxJob,* ListaDeJobs = NULL;
 
-    Ficheiro = fopen("Jobs.txt", "r");
+    Ficheiro = fopen("TotalJobs.txt", "r");
 
     if (Ficheiro == NULL)
     {
         return false;
     }
-
-    while (!feof(Ficheiro)) //Esta função retorna um valor diferente de zero quando o indicador End-of-File associado ao fluxo é definido, caso contrário, zero é retornado.
+    printf("2");
+    while (!feof(Ficheiro))//Esta função retorna um valor diferente de zero quando o indicador End-of-File associado ao fluxo é definido, caso contrário, zero é retornado.
     {
-        while (fscanf(Ficheiro, "%d", &IdMaquinas) == 1) //A função fscanf() é usada para ler a entrada formatada do fluxo fornecido na linguagem C. Retorna zero, se não for bem-sucedido. Caso contrário, ele retornará A string de entrada, se for bem-sucedida.
+        printf("3");
+        while (fscanf(Ficheiro, "%d", &IdJobs) != 1)//A função fscanf() é usada para ler a entrada formatada do fluxo fornecido na linguagem C. Retorna zero, se não for bem-sucedido. Caso contrário, ele retornará A string de entrada, se for bem-sucedida.
         {
-            fscanf(Ficheiro, " %d", &TempoMaquinas);
-            auxMaquina = CriaMaquina(IdMaquinas, TempoMaquinas);
-            ListaDeMaquinas = InsereMaquina(&ListaDeMaquinas, auxMaquina);
+            printf("4");
+            if (fscanf(Ficheiro, " %d", &IdMaquinas) == 1)
+            {
+                printf("5");
+                fscanf(Ficheiro, " %d", &TempoMaquinas);
+                auxMaquina = CriaMaquinaFicheiro(IdMaquinas, TempoMaquinas);
+                ListaDeMaquinas = InsereMaquinaListaFinal(&ListaDeMaquinas, auxMaquina);
 
-            fscanf(Ficheiro, "%*c");
+                fscanf(Ficheiro, "%*c");
+            }
+            else
+            {
+                fscanf(Ficheiro, " %d", &IdOperacoes);
+                auxOperacao = CriaOperacaoFicheiro(IdOperacoes);
+                auxOperacao->Maquinas = ListaDeMaquinas;
+                ListaDeOperacoes = InsereOperacaoListaFinal(&ListaDeOperacoes, auxOperacao);
+                ListaDeMaquinas = NULL;
+
+                fscanf(Ficheiro, "%*c");
+            }
         }
-        fscanf(Ficheiro, " %d", &IdOperacoes);
-        auxOperacao = CriaOperacao(IdOperacoes);
-        auxOperacao->Maquinas = ListaDeMaquinas;
-        ListaDeOperacoes = InsereOperacao(&ListaDeOperacoes, auxOperacao);
-        ListaDeMaquinas = NULL;
-    }
+        fscanf(Ficheiro, " %d", &IdJobs);
+        auxJob = CriaJobFicheiro(IdJobs);
+        auxJob->Operacoes = ListaDeOperacoes;
+        ListaDeJobs = InsereJobListaFinal(&ListaDeJobs, auxJob);
+        ListaDeOperacoes = NULL;
 
-    Job* auxJob = CriaJob(1);
-    auxJob->Operacoes = ListaDeOperacoes;
-    ListaDeJobs = InsereJob(&ListaDeJobs, auxJob);
+        fscanf(Ficheiro, "%*c");
+    }
 
     return ListaDeJobs;
 }
-
 #pragma endregion
 
 #pragma region Operacoes
 
-//Criar uma operação
-Operacao* CriaOperacao(int Id)
+//Cria uma Operacao no Ficheiros (se não existe)
+Operacao* CriaOperacaoNoFicheiro(int Id)
 {
     Operacao* NovaOperacao = (Operacao*)malloc(sizeof(Operacao));
     if (NovaOperacao == NULL)
@@ -108,6 +127,31 @@ Operacao* CriaOperacao(int Id)
 
     return NovaOperacao;
 }
+
+
+//Cria Operacao na HeadLista
+Operacao* CriaOperacao(Operacao* ListaDeOperacoes, int Id)
+{
+    if (ExisteOperacao(ListaDeOperacoes, Id) == false)
+    {
+        return NULL;
+    }
+
+    Operacao* NovaOperacao = (Operacao*)malloc(sizeof(Operacao));
+
+    if (NovaOperacao == NULL)
+    {
+        return NULL;
+    }
+
+    NovaOperacao->Id = Id;
+    NovaOperacao->Maquinas = NULL;
+    NovaOperacao->Next = NULL;
+
+    return NovaOperacao;
+}
+
+
 
 //Inserir uma operação na lista de operações
 Operacao* InsereOperacao(Operacao** ListaDeOperacoes, Operacao* NovaOperacao)
@@ -190,7 +234,7 @@ Operacao* ProcuraOperacao(Operacao* ListaDeOperacoes, int Id)
     }
 }
 
-//Trocar uma determinada operação
+//Trocar uma determinada operação ( Id da Operacao que quer Trocar pelo ID2 da Operacao desejada
 Operacao* TrocaOperacao(Operacao* ListaDeOperacoes, int IdOperacao, int IdOperacaoTroca)
 {
     if (ListaDeOperacoes == NULL)
@@ -217,7 +261,7 @@ int TempoMinimoDaOperacao(Operacao* ListaDeOperacoes, int Id)
         return 0;
     }
 
-    int TempoMinimoDaOperacao = 5, IdMaquina;
+    int TempoMinimoDaOperacao = 50, IdMaquina;
     Operacao* aux = ProcuraOperacao(ListaDeOperacoes, Id);
     Maquina* auxMaquina = aux->Maquinas;
 
@@ -230,7 +274,7 @@ int TempoMinimoDaOperacao(Operacao* ListaDeOperacoes, int Id)
         }
         auxMaquina = auxMaquina->Seguinte;
     }
-    printf("Menor Tempo - Operacao %d: Maquina %d, Tempo %d\n", aux->Id, IdMaquina, TempoMinimoDaOperacao);
+   // printf("Menor Tempo - Operacao %d: Maquina %d, Tempo %d\n", aux->Id, IdMaquina, TempoMinimoDaOperacao);
 
     return TempoMinimoDaOperacao;
 }
@@ -268,23 +312,23 @@ float TempoMedioDaOperacao(Operacao* ListaDeOperacoes, int Id)
     //Se a lista for igual a 0
     if (ListaDeOperacoes == NULL)
     {
-        scanf("Lista Vazia");
+        return -1;
     }
 
-    int Soma = 0; // Será somado todas operaçôpes
-    int Total = 0; //Armazenado todas as operações
+    int SomaDeMaquinas = 0; // Será somado todas operaçôpes
+    int TotalDeMaquinas = 0; //Armazenado todas as operações
     Operacao* aux = ProcuraOperacao(ListaDeOperacoes, Id);
     Maquina* auxMaquina = aux->Maquinas;
 
 
     while (auxMaquina != NULL)
     {
-        Soma += auxMaquina->Tempo;
-        Total++;
+        SomaDeMaquinas += auxMaquina->Tempo;
+        TotalDeMaquinas++;
         auxMaquina = auxMaquina->Seguinte;
     }
 
-    return (Soma / Total); //Resultado Final
+    return (SomaDeMaquinas / TotalDeMaquinas); //Resultado Final
 }
 
 //Verificar se a operação existe
@@ -335,12 +379,10 @@ void MostraOperacoes(Operacao* ListaDeOperacoes)
     printf("\n");
 }
 
-#pragma endregion
 
-#pragma region Maquinas
 
 //Criar uma Maquina
-Maquina* CriaMaquina(int Id, int Tempo)
+Maquina* CriaMaquinaFicheiro(int Id, int Tempo)
 {
     Maquina* NovaMaquina = (Maquina*)malloc(sizeof(Maquina));
 
@@ -355,6 +397,30 @@ Maquina* CriaMaquina(int Id, int Tempo)
 
     return NovaMaquina;
 }
+
+
+Maquina* CriaMaquina(Maquina* ListaDeMaquinas, int Id, int Tempo)
+{
+    if (ExisteMaquina(ListaDeMaquinas, Id) == NULL)
+    {
+        return NULL;
+    }
+
+    Maquina* NovaMaquina = (Maquina*)malloc(sizeof(Maquina));
+
+    if (NovaMaquina == NULL)
+    {
+        return NULL;
+    }
+
+    NovaMaquina->Id = Id;
+    NovaMaquina->Tempo = Tempo;
+    NovaMaquina->Next = NULL;
+
+    return NovaMaquina;
+}
+
+
 //**Lista Ligada de uma lista ligada, Um apontador, lista ligada, que irá ter outro apontador, outra lista ligada. Apontadore de Apontadores.
 //Inserir uma maquina
 Maquina* InsereMaquina(Maquina** ListaDeMaquinas, Maquina* NovaMaquina)
@@ -478,7 +544,7 @@ void MostraListaDeMaquinas(Maquina* ListaDeMaquinas)
 #pragma region Jobs
 
 //Criar um JOB
-Job* CriaJob(int Id)
+Job* CriaJobFicheiro(int Id)
 {
     Job* NovoJob = (Job*)malloc(sizeof(Job));
     if (NovoJob == NULL) return NULL;
@@ -489,6 +555,27 @@ Job* CriaJob(int Id)
 
     return NovoJob;
 }
+
+//Criar um Job na ListadeJobs
+Job* CriaJob(Job* ListaDeJobs, int Id)
+{
+    if (ExisteJob(ListaDeJobs, Id) == false)
+    {
+        return NULL;
+    }
+
+    Job* NovoJob = (Job*)malloc(sizeof(Job));
+
+    if (NovoJob == NULL) return NULL;
+
+    NovoJob->Id = Id;
+    NovoJob->Operacoes = NULL;
+    NovoJob->Next = NULL;
+
+    return NovoJob;
+}
+
+
 
 //Inserir um JOB
 Job* InsereJob(Job** ListaDeJobs, Job* NovoJob)
@@ -536,6 +623,50 @@ Job* ProcuraJob(Job* ListaDeJobs, int Id)
     }
     return NULL;
 }
+
+//Remover Job
+Job* RemoveJob(Job* ListaDeJobs, int Id)
+{
+    if (ListaDeJobs == NULL)
+    {
+        return NULL;
+    }
+
+    if (ExisteJob(ListaDeJobs, Id) == false)
+    {
+        return NULL;
+    }
+
+    if (ListaDeJobs->Id == Id)
+    {
+        Job* auxJob = ListaDeJobs;
+        ListaDeJobs = auxJob->Next;
+        free(auxJob);
+    }
+    else
+    {
+        Job* auxJob = ListaDeJobs;
+        Job* auxJobAnt = auxJob;
+
+        while (auxJob && auxJob->Id != Id)
+        {
+            auxJobAnt = auxJob;
+            auxJob = auxJob->Next;
+        }
+        if (auxJob != NULL)
+        {
+            auxJobAnt->Next = auxJob->Next;
+            free(auxJob);
+        }
+    }
+    return ListaDeJobs;
+}
+
+
+
+
+
+
 
 //Calcuar tempo minimo de um Job
 int TempoMinimoDeJob(Job* ListaDeJobs, int Id)
@@ -611,3 +742,136 @@ void MostraListaJobs(Job* ListaDeJobs)
 }
 
 #pragma endregion
+
+//Inicia a HashTable
+
+void IniciaHash(Job* HashTable[], int Max)
+{
+    for (int i = 0; i < Max; i++)
+    {
+        HashTable[i] = NULL;
+    }
+}
+
+/**
+ * @brief Encontra a Key que serÃ¡ precisa na HashTable
+ *
+ * @param Id do Job usado para encontrar a Key
+ * @return Key usada para Encontrar o Job na HashTable
+ */
+int KeyHash(char* Id)
+{
+    int Soma = 0;
+
+    for (int i = 0; i < strlen(Id); i++)
+    {
+        Soma += (int)Id[i];
+    }
+
+    return Soma % MAX;
+}
+
+/**
+ * @brief Insere um Job numa HashTable -> Substitui o InsereJobListaFinal
+ *
+ * @param HashTable para Inserir
+ * @param JobInserir
+ * @return Hashtable com job novo
+ */
+Job** InserirJobHashTableInicio(Job* HashTable[], Job* JobInserir)
+{
+    int Pos = KeyHash(JobInserir->Id);
+
+    JobInserir->Next = HashTable[Pos];
+    HashTable[Pos] = JobInserir;
+
+    return *HashTable;
+}
+
+/**
+ * @brief Procura o Job na HashTable -> Substitui o ProcuraJob
+ *
+ * @param Id do Job que quer encontrar
+ * @param HashTable Utilizada para encontrar o Job
+ * @return Job encontrado
+ */
+Job* ProcurarJobHashTable(char* Id, Job* HashTable[])
+{
+    int Pos = KeyHash(Id);
+
+    if (HashTable[Pos] == NULL)
+    {
+        return NULL;
+    }
+
+    //Mudar o ProcuraJob para (headListaJobs, char* Id)
+
+    return ProcuraJob(HashTable[Pos], (int)Id);
+}
+
+/**
+ * @brief Remove um Job de uma HashTable -> Substitui o RemoveJob
+ *
+ * @param HashTable para encontrar o Job que quer Remover
+ * @param Id do Job que quer remover
+ * @return HashTable sem o Job que retirou
+ */
+Job* RemoveJobHashTable(Job* HashTable[], char* Id)
+{
+    int Pos = KeyHash(Id);
+
+    if (HashTable[Pos] == NULL)
+    {
+        return NULL;
+    }
+
+    //Remover no Inicio da Hash Table
+
+    if (HashTable[Pos]->Id == Id)
+    {
+        Job* auxJob = HashTable[Pos];
+        HashTable[Pos] = auxJob->Next;
+        free(auxJob);
+    }
+
+    //Remover no Meio ou no Final da Hash Table
+
+    else
+    {
+        Job* auxJob = HashTable[Pos];
+        Job* auxAnt = auxJob;
+
+        while (auxJob && auxJob->Id == Id)
+        {
+            auxAnt = auxJob;
+            auxJob = auxAnt->Next;
+        }
+
+        if (auxJob != NULL)
+        {
+            auxAnt->Next = auxJob->Next;
+            free(auxJob);
+        }
+    }
+}
+
+/**
+ * @brief Mostra a HashTable -> Substitui o MostraListaJobs
+ *
+ * @param HashTable para Printar
+ */
+void MostraHashTable(Job* HashTable[])
+{
+    for (int i = 0; i < MAX; i++)
+    {
+        if (HashTable[i] != NULL)
+        {
+            printf("Index: %d\n", i);
+            MostraListaOperacoes(HashTable[i]->Operacoes);
+            printf("\n");
+        }
+    }
+}
+
+#pragma endregion
+

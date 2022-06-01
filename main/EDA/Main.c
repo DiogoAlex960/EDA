@@ -5,120 +5,50 @@
 #include <stdlib.h>
 #include<conio.h>
 #include "Estrutura.h"
+#include "AddMenus.h"
 #include <string.h>
 void MainMenu()
 {
     //Menu principal
     system("cls");
     int Escolha;
+    printf("1");
     Job* ListaDeJobs = LerFicheiro();
-
+    printf("10");
     do
     {
         printf(
                "------------------------------ MENU ------------------------------\n"
-               "1 - Adiciona Operacao\n"
-               "2 - Remove Operacao\n"
-               "3 - Altera Operacao\n"
-               "4 - Jobs\n"
-               "5 - Minimo\n"
-               "6 - Maximo\n"
-               "7 - Media\n"
-               "8- AddJob"
-               "9- Remover Job"
-               "\n"
-               "0 - Quit\n"
+               "\t Enter 1 - Mostra Jobs\n"
+               "\t Enter 2 - Adiciona Operacao\n"
+               "\t Enter 3 - Remove Operacao\n"
+               "\t Enter 4 - Altera Operacao\n"
+               "\t Enter 5 - Informacoes\n"
+               "\n\t Enter 0 - Quit\n"
                "------------------------------ <-> ------------------------------");
 
-        Escolha = Valor(8, 0);
+        Escolha = Valor(5, 0);
 
         switch (Escolha)
         {
         case 1:
-        ListaDeJobs = AdicionaOperacao(ListaDeJobs);
-
-
+            MenuMostraJob(ListaDeJobs);
             break;
-
         case 2:
-        ListaDeJobs = RemoveOperacao(ListaDeJobs);
-
+            ListaDeJobs = MenuAdicionaOperacao(ListaDeJobs);
             break;
 
         case 3:
-        ListaDeJobs = AlteraOperacao(ListaDeJobs);
-
+            ListaDeJobs = MenuRemoveOperacao(ListaDeJobs);
             break;
 
         case 4:
-
-              system("cls");
-
-                MostraListaJobs(ListaDeJobs);
-
-                getche();
-                system("cls");
+            ListaDeJobs = MenuAlteraOperacao(ListaDeJobs);
             break;
 
         case 5:
-            system("cls");
-
-            int TempoMinimo;
-
-            TempoMinimo = TempoMinimoDeJob(ListaDeJobs, ListaDeJobs->Id);
-
-            printf("Menor Tempo do Job: %d\n\n", TempoMinimo);
-            getche();
-            system("cls");
+            MenuInformacoes(ListaDeJobs);
             break;
-
-
-        case 6:
-            int TempoMaximo;
-
-            TempoMaximo = TempoMaximoDeJob(ListaDeJobs, ListaDeJobs->Id);
-
-            printf("Maior Tempo do Job: %d\n\n", TempoMaximo);
-            getche();
-            system("cls");
-            break;
-
-        case 7:
-
-    MostraOperacoes(ListaDeJobs->Operacoes);
-
-
-            int Id, TempoMedio;
-
-            printf("Introduza o Id da Operacao:\n\t> ");
-            scanf(" %d", &Id);
-
-            Operacao* auxOperacao = ProcuraOperacao(ListaDeJobs->Operacoes, Id);
-
-            if (auxOperacao == NULL)
-            {
-
-                printf("Erro");
-                getche();
-                system("cls");
-                break;
-            }
-
-            TempoMedio = TempoMedioDaOperacao(ListaDeJobs->Operacoes, auxOperacao->Id);
-
-            printf("Tempo Medio da Operacao: %d\n", TempoMedio);
-            getche();
-            system("cls");
-            break;
-
-    case 8:
-                ListaDeJobs = AdicionarJob(ListaDeJobs);
-
-    break;
-    case 9:
-                ListaDeJobs = AdicionarJob(ListaDeJobs);
-
-    break;
         case 0:
             break;
 
@@ -129,107 +59,69 @@ void MainMenu()
         }
     } while (Escolha != 0);
 
-    GravarJobs(ListaDeJobs->Operacoes);
+    GravarFicheiro(ListaDeJobs);
 }
 
 //---------------------------------------------------------------------------------------------
-
-
-Job* AdicionarJob(Job* ListaDeJobs)
+/**
+ * @brief Mostra o Job Introduzido no Programa
+ *
+ * @param Lista de Jobs;
+ */
+void MenuMostraJob(Job* ListaDeJobs)
 {
-    int IdJob;
+    system("cls");
+
+    MostraListaJobs(ListaDeJobs);
+
+    printf("Pressiona alguma Tecla para Continuar!");
+    getche();
+    system("cls");
+    return;
+}
+
+
+/**
+ * @brief Menu para Adicionar Operacoes
+ *
+ * @param Lista de Jobs
+ * @return Lista de Jobs com Nova Operacao
+ */
+Job* MenuAdicionaOperacao(Job* ListaDeJobs)
+{
+    int IdOperacao;
 
     system("cls");
 
-    printf("Id do Job que deseja Adicionar\n");
-    scanf(" %d", &IdJob);
+    printf("Id da Operacao que deseja Adicionar\n\t");
+    scanf(" %d", &IdOperacao);
 
-    if (ExisteJob(ListaDeJobs, IdJob) == true)
+    if (ExisteOperacao(ListaDeJobs->Operacoes, IdOperacao) == true)
     {
-        printf("\nJob ja Existe\n");
+        printf("\n\t//Opcao Invalida//\n\n");
+        printf("\n\tOperacao ja Existe no Contexto Atual\n\n");
+        printf("Pressiona alguma Tecla para Continuar!");
         getche();
         system("cls");
         return ListaDeJobs;
     }
 
-    Job* auxjob = CriaJob(IdJob);
-    ListaDeJobs =  InsereJob(&ListaDeJobs, auxjob);
+    Operacao* auxOperacao = CriaOperacao(ListaDeJobs->Operacoes, IdOperacao);
 
+    Maquina* auxMaquina;
+    auxMaquina = MenuAdicionaMaquina(auxMaquina);
 
+    auxOperacao->Maquinas = auxMaquina;
 
-    system("cls");
-    return ListaDeJobs;
-}
-
-Job* RemoveJob(Job* ListaDeJobs)
-{
-    system("cls");
-
-    int IdJob;
-
-    MostraJobs(ListaDeJobs);
-
-    printf("Introduza o Id do Job que quer Remover\n");
-    scanf(" %d", &IdJob);
-
-    int a;
-	 printf("Deseja realizar mesmo esta operacao?: \n\t"
-	 "Se sim, carregue 1.\n\t"
-	 "Se nao, carregue 0.\n\t");
-     printf("->");
-	scanf ("%d",&a);
-
-
-	if (a==1)
-	{
-    if (ExisteJob(ListaDeJobs, IdJob) == false)
-    {
-        printf("Erro");
-        getche();
-        system("cls");
-        return ListaDeJobs;
-    }
-
-    Job* auxJob = ProcuraJob(ListaDeJobs, ListaDeJobs->Id);
-    Job* auxJob = ProcuraJob(ListaDeJobs, IdJob);
-
-    if (auxJob != NULL)
-    {
-        Job* auxJob2 = ProcuraJob(ListaDeJobs, IdJob - 1);
-        if (auxJob2 != NULL)
-        {
-            auxJob2->Seguinte = auxJob->Seguinte;
-        }
-        else
-        {
-            auxJob->Operacoes = auxOperacao->Seguinte;
-        }
-        free(aux);//desalocar dinamicamente a memória.
-        auxOperacao = auxJob->Operacoes;
-        IdOperacao = 1;
-        while (auxOperacao != NULL)
-        {
-            auxOperacao->Id = IdOperacao;
-            IdOperacao++;
-            auxOperacao = auxOperacao->Seguinte;
-        }
-    }
+    ListaDeJobs->Operacoes = InsereJobLista(&ListaDeJobs->Operacoes, auxOperacao);
 
     system("cls");
-    printf("Efetuado");
+    printf("\tOperacao Adicionada\n\n");
+    printf("Pressiona alguma Tecla para Continuar!");
     getche();
     system("cls");
     return ListaDeJobs;
-	}
-	else{
-	     system("cls");
-    printf("Carregue Enter para continuar");
-    getche();
-        system("cls");
-        return ListaDeJobs;
-	}
 }
-
 
 
 
@@ -268,7 +160,7 @@ Job* AdicionaOperacao(Job* ListaDeJobs)
 }
 
 //Adicionar Maquinas
-Maquina* AdicionaMaquina(Maquina* ListaDeMaquinas)
+Maquina* MenuAdicionaMaquina(Maquina* ListaDeMaquinas)
 {
     int Escolha;
     ListaDeMaquinas = NULL;
@@ -310,7 +202,7 @@ Maquina* AdicionaMaquina(Maquina* ListaDeMaquinas)
 }
 
 //Remover uma operação
-Job* RemoveOperacao(Job* ListaDeJobs)
+Job* MenuRemoveOperacao(Job* ListaDeJobs)
 {
     system("cls");
 
@@ -542,6 +434,100 @@ Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDe
 
 }
 
+/**
+ * @brief Menu para as Informacoes
+ *
+ * @param Lista de Jobs
+ *
+ * @param [out] Prints das Informacoes
+ */
+void MenuInformacoes(Job* ListaDeJobs)
+{
+    int Escolha, IdJob;
+
+    system("cls");
+
+    printf("Id do Job que deseja ser Informado\n\t");
+    scanf(" %d", &IdJob);
+
+    do
+    {
+        system("cls");
+        printf("\t--- Informacoes ---\n"
+               "\t Enter 1 - O Menor Tempo do Job \n"
+               "\t Enter 2 - O Maior Tempo do Job \n"
+               "\t Enter 3 - O Tempo Medio de uma Operacao \n"
+               "\n\t Enter 0 - Confirmar\n");
+
+        Escolha = Valor(3, 0);
+
+        switch (Escolha)
+        {
+        case 1:
+            system("cls");
+
+            int TempoMinimo;
+
+            TempoMinimo = TempoMinimoDeJob(ListaDeJobs, IdJob);
+
+            printf("O Menor Tempo do Job e: %d\n\n", TempoMinimo);
+            printf("Pressiona alguma Tecla para Continuar!");
+            getche();
+            system("cls");
+            break;
+
+        case 2:
+            system("cls");
+
+            int TempoMaximo;
+
+            TempoMaximo = TempoMaximoDeJob(ListaDeJobs, IdJob);
+
+            printf("O Maior Tempo do Job e: %d\n\n", TempoMaximo);
+            printf("Pressiona alguma Tecla para Continuar!");
+            getche();
+            system("cls");
+            break;
+
+        case 3:
+            system("cls");
+
+            int Id, TempoMedio;
+
+            printf("Insira o Id da Operacao:\n\t> ");
+            scanf(" %d", &Id);
+
+            Operacao* auxOperacao = ProcuraOperacao(ListaDeJobs->Operacoes, Id);
+
+            if (auxOperacao == NULL)
+            {
+                printf("\n\t//Opcao Invalida//\n\n");
+                printf("\n\tOperacao nao Existe no Contexto Atual\n\n");
+                printf("Pressiona alguma Tecla para Continuar!");
+                getche();
+                system("cls");
+                break;
+            }
+
+            TempoMedio = TempoMedioDaOperacao(ListaDeJobs->Operacoes, auxOperacao->Id);
+
+            printf("O Tempo Medio da Operacao e: %d\n\n", TempoMedio);
+            printf("Pressiona alguma Tecla para Continuar!");
+            getche();
+            system("cls");
+            break;
+
+        case 0:
+            return;
+
+        default:
+            printf("\n\t//Opcao Invalida//\n\n");
+            return;
+        }
+    } while (Escolha != 0);
+
+}
+// MENU
 
 void main()
 {

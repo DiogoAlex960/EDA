@@ -4,13 +4,14 @@
 #ifndef Structs
 #define Structs
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
-#include<locale.h>
-#include<ctype.h>
 
-#pragma endregion
+#define MAX 3
+
+#pragma warning( disable : 4996 )
+
 #pragma region Estruturas
 
 //Jobs
@@ -52,8 +53,13 @@ void GravarFicheiro(Operacao* ListaDeOperacoes);
 Job* LerFicheiro();
 
 //Opera��es
+
+
 //Criar Opera��o
 Operacao* CriaOperacao(int Id);
+
+//Criar Opera��o no Ficheiro
+Operacao* CriaOperacaoNoFicheiro(Operacao* ListaDeOperacoes, int Id)
 
 //Inserir uma Nova Opera��o
 Operacao* InsereOperacao(Operacao** ListaDeOperacoes, Operacao* NovaOperacao);
@@ -73,6 +79,9 @@ int TempoMinimoDaOperacao(Operacao* ListaDeOperacoes, int Id);
 //Tempo m�dio de uma opera��o
 float TempoMedioDaOperacao(Operacao* ListaDeOperacoes, int Id);
 
+//Tempo Maximo de uma Opera��o
+int TempoMaximoDaOperacao(Operacao* ListaDeOperacoes, int Id);
+
 //Verifica se existe uma determinada opera��o
 bool ExisteOperacao(Operacao* ListaDeOperacoes, int Id);
 
@@ -83,13 +92,14 @@ void MostraListaDeOperacoes(Operacao* ListaDeOperacoes);
 void MostraOperacoes(Operacao* ListaDeOperacoes);
 
 
-//Tempo Maximo de uma Opera��o
-int TempoMaximoDaOperacao(Operacao* ListaDeOperacoes, int Id);
 
 
 //Maquinas
 //Criar uma maquina
-Maquina* CriaMaquina(int Id, int Tempo);
+Maquina* CriaMaquina(Maquina* ListaDeMaquinas, int Id, int Tempo);
+
+//Criar Maquina no Ficheiro
+Maquina* CriaMaquinaFicheiro(int Id, int Tempo);
 
 //Inserir uma maquina nova
 Maquina* InsereMaquina(Maquina** ListaDeMaquinas, Maquina* NovaMaquina);
@@ -109,11 +119,13 @@ Maquina* ProcuraMaquina(Maquina* ListaDeMaquinas, int Id);
 
 
 //Jobs
-//Cria um Job
-Job* CriaJob(int Id);
-//**Lista Ligada de uma lista ligada, Um apontador que irá ter outro apontador. Apontadore de Apontadores
+//Cria um Job no ficheiro
+Job* CriaJobFicheiro(int Id);
 
-//Insere um determinado Job
+//Cria Job
+Job* CriaJob(Job* ListaDeJobs, int Id);
+
+//Insere um determinado Job//**Lista Ligada de uma lista ligada, Um apontador que irá ter outro apontador. Apontadore de Apontadores
 Job* InsereJob(Job** ListaDeJobs, Job* NovoJob);
 
 //Verifica de existe um job
@@ -136,28 +148,18 @@ int TempoMaximoDeJob(Job* ListaDeJobs, int Id);
 
 //Menus gerais
 //Menu principal
-void MainMenu();
+void IniciaHash(Job* HashTable[], int Max);
 
-//Mostra a listagem de Jobs
-void MostraJobs(Job* ListaDeJobs);
+int KeyHash(char* Id);
 
-//Menu de adicionar opera��o
-Job* AdicionaOperacao(Job* ListaDeJobs);
+Job** InserirJobHashTableInicio(Job* HashTable[], Job* JobInserir);
 
-//Remover uma determinada opera��o
-Job* RemoveOperacao(Job* ListaDeJobs);
+Job* ProcurarJobHashTable(char* Id, Job* HashTable[]);
 
-//Alterar uma determinada Opera��o
-Job* AlteraOperacao(Job* ListaDeJobs);
+Job* RemoveJobHashTable(Job* HashTable[], char* Id);
 
-//Alterar uma opera��o esculhida pelo utilizador
-Operacao* AlteraOperacaoEscolhida(Operacao* OperacaoEscolhida, Operacao* ListaDeOperacoes);
+void MostraHashTable(Job* HashTable[]);
 
-//Adicionar uma determinada maquina
-Maquina* AdicionaMaquina(Maquina* ListaDeMaquinas);
-
-Job* AdicionarJob(Job* ListaDeJobs);
-Job* RemoveJob(Job* ListaDeJobs);
 #pragma endregion
 
 #endif
